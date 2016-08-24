@@ -16,8 +16,8 @@
         <property name="javaFileEncoding" value="UTF-8"/>
 
         <!-- optional，旨在创建class时，对注释进行控制 -->
-       <!-- <commentGenerator>
-               &lt;!&ndash; 是否生成注释代时间戳  &ndash;&gt;
+        <!--<commentGenerator>
+            &lt;!&ndash; 是否生成注释代时间戳  &ndash;&gt;
             <property name="suppressDate" value="true" />
             &lt;!&ndash;  关闭自动生成的注释  &ndash;&gt;
             <property name="suppressAllComments" value="true" />
@@ -52,7 +52,7 @@
             <!-- 是否允许子包，添加schemaName做为包名,即targetPackage.schemaName.tableName -->
             <property name="enableSubPackages" value="true"/>
             <!-- 建立的Model对象是否 不可改变  即生成的Model对象不会有 setter方法，只有构造方法 -->
-            <property name="immutable" value="true"/>
+            <property name="immutable" value="false"/>
             <!-- 给Model添加一个父类 -->
             <!--<property name="rootClass" value="com.biz.Base"/>-->
             <!-- 是否对类CHAR类型的列的数据进行trim操作 -->
@@ -73,21 +73,25 @@
 
         <!-- 需要生成的表信息-->
         <!-- % 表示生成所有表,如果不是所有表的配置都一样，可以做针对性的配置。-->
-        <table tableName="%">
+        <table tableName="%" enableCountByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" enableUpdateByExample="false">
             <!-- 主键生成机制 参考 http://www.mybatis.org/generator/configreference/generatedKey.html-->
             <generatedKey column="id" sqlStatement="${generatedKey.db.name}" identity="true"/>
         </table>
 
-       <!-- <table tableName="biz_column" domainObjectName="BizColumn"
+        <table tableName="biz_column" domainObjectName="BizColumn"
                enableCountByExample="false" enableDeleteByExample="false"
                enableSelectByExample="false" enableUpdateByExample="false">
-            &lt;!&ndash; 忽略列，不生成bean 字段 &ndash;&gt;
-            &lt;!&ndash;<ignoreColumn column="create_time" />&ndash;&gt;
-            &lt;!&ndash; 指定列的java数据类型 &ndash;&gt;
-            &lt;!&ndash;<columnOverride column="key_type" jdbcType="VARCHAR" />&ndash;&gt;
+            <generatedKey column="id" sqlStatement="${generatedKey.db.name}" identity="true"/>
+            <!-- 忽略列，不生成bean 字段 -->
+            <!--<ignoreColumn column="create_time" />-->
+            <!-- 指定列的java数据类型 -->
+            <columnOverride column="not_null" javaType="java.lang.Boolean"/>
+            <columnOverride column="is_deprecated" javaType="java.lang.Boolean"/>
+            <columnOverride column="is_deleted" javaType="java.lang.Boolean"/>
         </table>
 
-        <table tableName="biz_database" domainObjectName="BizDatabase"></table>
+        <!--<table tableName="biz_database" domainObjectName="BizDatabase"></table>
         <table tableName="biz_module" domainObjectName="BizModule"></table>
         <table tableName="biz_table" domainObjectName="BizTable"></table>
         <table tableName="user" domainObjectName="User"></table>
